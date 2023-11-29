@@ -1,30 +1,27 @@
-#include <iostream> 
-#include<fstream> 
-#include <stdio.h> 
+#include <iostream>
+#include <string>
 
-using namespace std;
-
-class pizzeria {
+class Pizzeria {
 public:
     int id;
     double rating;
-    string name;
-    pizzeria(int id, double rating, string name) {
+    std::string name;
+
+    Pizzeria(int id, double rating, const std::string& name) {
         this->rating = rating;
         this->id = id;
         this->name = name;
     }
-
 };
 
-class menu {
+class Menu {
 public:
     int id;
     int pizzeria_id;
-    string pizza_name;
+    std::string pizza_name;
     double price;
 
-    menu(int id, int pizzeria_id, string pizza_name, double price) {
+    Menu(int id, int pizzeria_id, const std::string& pizza_name, double price) {
         this->id = id;
         this->pizzeria_id = pizzeria_id;
         this->pizza_name = pizza_name;
@@ -32,46 +29,46 @@ public:
     }
 };
 
-class person {
+class Person {
 public:
-    int  id;
-    string name;
+    int id;
+    std::string name;
     int age;
-    string gender;
-    string address;
+    bool gender;
+    std::string address;
 
-    person(int id, string name, int age, bool gender, string address) {
+    Person(int id, const std::string& name, int age, bool gender, const std::string& address) {
         this->id = id;
         this->name = name;
         this->age = age;
-        this->gender = gender? "male" : "false";
+        this->gender = gender;
         this->address = address;
     }
 };
 
-class person_visit {
+class PersonVisit {
 public:
     int id;
     int person_id;
     int pizza_id;
     bool date_visit;
 
-    person_visit(int id, int person_id, int pizza_id, bool date_visit) {
+    PersonVisit(int id, int person_id, int pizza_id, bool date_visit) {
         this->id = id;
         this->person_id = person_id;
         this->pizza_id = pizza_id;
         this->date_visit = date_visit;
-
     }
 };
 
-class person_order {
+class PersonOrder {
+public:
     int id;
     int person_id;
     int menu_id;
     int order_id;
 
-    person_order(int id, int person_id, int menu_id, int order_id) {
+    PersonOrder(int id, int person_id, int menu_id, int order_id) {
         this->id = id;
         this->person_id = person_id;
         this->menu_id = menu_id;
@@ -80,67 +77,51 @@ class person_order {
 };
 
 int main() {
-    pizzeria* pizzeria_1 = new pizzeria(1, 3, "Dodo pizza");
-    printf("id = %d rating = %lf name = %s\n", pizzeria_1->id, pizzeria_1->rating, pizzeria_1->name.c_str());
+    setlocale(LC_ALL, "RUS");
+    int chosenPizzeria;
 
-    pizzeria* pizzeria_2 = new pizzeria(2, 4.5, "888");
-    printf("id = %d rating = %lf name = %s\n", pizzeria_2->id, pizzeria_2->rating, pizzeria_2->name.c_str());
+    Pizzeria* pizzerias[3];
+    pizzerias[0] = new Pizzeria(1, 3, "Синица");
+    pizzerias[1] = new Pizzeria(2, 4, "Папа Джонс");
+    pizzerias[2] = new Pizzeria(4, 6, "Додо");
 
-    pizzeria* pizzeria_3 = new pizzeria(3, 2.6, "Dad Johns");
-    printf("id = %d rating = %lf name = %s\n", pizzeria_3->id, pizzeria_3->rating, pizzeria_3->name.c_str());
+    Menu* menus[3];
+    menus[0] = new Menu(54, 1, "маргаритта", 85);
+    menus[1] = new Menu(23, 2, "пеперони", 65);
+    menus[2] = new Menu(65, 4, "четыре сыра", 70);
 
-    person* person_1 = new person(1, "Adolf", 94, "male", "Kapfwagen strashe 24/1");
-    printf("id = %d name = %s age = %d gender = %s address = %s\n", person_1->id, person_1->name.c_str(), person_1->age, person_1->gender.c_str(), person_1->address.c_str());
+    Person* persons[3];
+    persons[0] = new Person(12, "Алексей", 30, true, "Address1");
+    persons[1] = new Person(19, "Валентин", 25, true, "Address2");
+    persons[2] = new Person(87, "Александр", 40, true, "Address3");
 
-    person* person_2 = new person(2, "zaza", 23, "male", "net takou 33");
-    printf("id = %d name = %s age = %d gender = %s address = %s\n", person_2->id, person_2->name.c_str(), person_2->age, person_2->gender.c_str(), person_2->address.c_str());
+    PersonVisit* visits[3];
+    visits[0] = new PersonVisit(99, 12, 2, true);
+    visits[1] = new PersonVisit(68, 19, 6, true);
+    visits[2] = new PersonVisit(85, 51, 1, true);
 
-    person* person_3 = new person(3, "Naruto", 16, "male", "konoxa");
-    printf("id = %d name = %s age = %d gender = %s address = %s\n", person_3->id, person_3->name.c_str(), person_3->age, person_3->gender.c_str(), person_3->address.c_str());
+    PersonOrder* orders[3];
+    orders[0] = new PersonOrder(94, 12, 54, true);
+    orders[1] = new PersonOrder(24, 19, 23, true);
+    orders[2] = new PersonOrder(621, 51, 76, true);
 
-    pizzeria* pizzeria_2 = new pizzeria(2, 4.5, "888");
-    printf("id = %d rating = %lf name = %s\n", pizzeria_2->id, pizzeria_2->rating, pizzeria_2->name.c_str());
+    std::cout << "Выберите пиццерию (0-2): ";
+    std::cin >> chosenPizzeria;
 
-    pizzeria* pizzeria_3 = new pizzeria(3, 2.6, "Dad Johns");
-    printf("id = %d rating = %lf name = %s\n", pizzeria_3->id, pizzeria_3->rating, pizzeria_3->name.c_str());
+    std::cout << "Информация о заказах для пиццерии " << pizzerias[chosenPizzeria]->name << ":" << std::endl;
+    for (int i = 0; i < 3; i++) {
+        if (visits[i]->pizza_id == chosenPizzeria + 1) {
+            int personId = visits[i]->person_id - 1;
+            int menuId = visits[i]->pizza_id - 1;
 
-    menu* pizza_1 = new menu(1, 1, "Margarita", 10.99);
-    printf("id = %d pizzeria_id = %d pizza_name = %s price = %lf\n", pizza_1->id, pizza_1->pizzeria_id, pizza_1->pizza_name.c_str(), pizza_1->price);
-
-    menu* pizza_2 = new menu(2, 1, "Pepperoni", 12.99);
-    printf("id = %d pizzeria_id = %d pizza_name = %s price = %lf\n", pizza_2->id, pizza_2->pizzeria_id, pizza_2->pizza_name.c_str(), pizza_2->price);
-
-    menu* pizza_3 = new menu(3, 1, "meat", 14.99);
-    printf("id = %d pizzeria_id = %d pizza_name = %s price = %lf\n", pizza_3->id, pizza_3->pizzeria_id, pizza_3->pizza_name.c_str(), pizza_3->price);
-
-    person_visit* visit_1 = new person_visit(1, 1, 1, true);
-    printf("id = %d person_id = %d pizza_id = %d date_visit = %d\n", visit_1->id, visit_1->person_id, visit_1->pizza_id, visit_1->date_visit);
-
-    person_visit* visit_2 = new person_visit(2, 3, 2, false);
-    printf("id = %d person_id = %d pizza_id = %d date_visit = %d\n", visit_2->id, visit_2->person_id, visit_2->pizza_id, visit_2->date_visit);
-
-    person_visit* visit_3 = new person_visit(3, 1, 3, true);
-    printf("id = %d person_id = %d pizza_id = %d date_visit = %d\n", visit_3->id, visit_3->person_id, visit_3->pizza_id, visit_3->date_visit);
-
-    person_order* order_1 = new person_order(1, 1, 1, 1);
-    printf("id = %d person_id = %d menu_id = %d order_id = %d\n", order_1->id, order_1->person_id, order_1->menu_id, order_1->order_id);
-
-    delete pizzeria_1;
-    delete pizzeria_2;
-    delete pizzeria_3;
-    delete person_1;
-    delete person_2;
-    delete person_3;
-    delete pizza_1;
-    delete pizza_2;
-    delete pizza_3;
-    delete visit_1;
-    delete visit_2;
-    delete visit_3;
-    delete order_1;
-    delete order_2;
-    delete order_3;
-
+            std::cout << "Заказ №" << orders[i]->id << std::endl;
+            std::cout << "Покупатель: " << persons[i]->name << std::endl;
+            std::cout << "Пицца: " << menus[menuId]->pizza_name << std::endl;
+            std::cout << "Цена: " << menus[menuId]->price << " рублей" << std::endl;
+            std::cout << "Дата заказа: " << (visits[i]->date_visit) << std::endl;
+            std::cout << "--------------------------" << std::endl;
+        }
+    }
 
     return 0;
 }
