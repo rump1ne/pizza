@@ -3,16 +3,16 @@
 #include <vector>
 #include <map>
 
-// Define structs for each table
+//Определяем структуры для каждой таблицы
 
-// Pizzeria table
+//Таблица Pizzeria
 struct Pizzeria {
     int id;
     std::string name;
     float rating;
 };
 
-// Person table
+//Таблица Person
 struct Person {
     int id;
     std::string name;
@@ -21,7 +21,7 @@ struct Person {
     std::string address;
 };
 
-// Person visits table
+//Таблица Person visits
 struct PersonVisits {
     int id;
     int person_id;
@@ -29,7 +29,7 @@ struct PersonVisits {
     std::string visit_date;
 };
 
-// Menu table
+//Таблица Menu
 struct Menu {
     int id;
     int pizzeria_id;
@@ -37,7 +37,7 @@ struct Menu {
     float price;
 };
 
-// Person order table
+//Таблица Person order
 struct PersonOrder {
     int id;
     int person_id;
@@ -46,14 +46,14 @@ struct PersonOrder {
 };
 
 int main() {
-    // Example usage
+    //Пример использования
     std::vector<Pizzeria> pizzerias;
     std::vector<Person> persons;
     std::vector<PersonVisits> personVisits;
     std::vector<Menu> menus;
     std::vector<PersonOrder> personOrders;
 
-    // Populate the tables (for demonstration purposes)
+    //Заполняем таблицы (в демонстрационных целях)
     Pizzeria pizzeria1 = {1, "Pizzeria Uno", 4.2};
     Pizzeria pizzeria2 = {2, "Pizza Hut", 3.8};
     pizzerias.push_back(pizzeria1);
@@ -79,19 +79,19 @@ int main() {
     personOrders.push_back(order1);
     personOrders.push_back(order2);
 
-    // Create a map to store Pizzeria information
+    //Создаём map для хранения информации о пиццерии
     std::map<int, Pizzeria> pizzeriaMap;
     for (const auto& pizzeria : pizzerias) {
         pizzeriaMap[pizzeria.id] = pizzeria;
     }
 
-    // Displaying sample data using map (for demonstration purposes)
+    //Отображаем выборочные данные с помощью map (в демонстрационных целях)
     std::cout << "Sample Pizzerias:" << std::endl;
     for (const auto& entry : pizzeriaMap) {
         std::cout << "ID: " << entry.second.id << ", Name: " << entry.second.name << ", Rating: " << entry.second.rating << std::endl;
     }
 
-    // Similar display for other tables...
+    //Аналогично отображаем для других таблиц...
 
     return 0;
 }
