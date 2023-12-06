@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <map>
 
 class Pizzeria {
 public:
@@ -80,39 +81,39 @@ int main() {
     setlocale(LC_ALL, "RUS");
     int chosenPizzeria;
 
-    Pizzeria* pizzerias[3];
-    pizzerias[0] = new Pizzeria(1, 3, "Синица");
-    pizzerias[1] = new Pizzeria(2, 4, "Папа Джонс");
-    pizzerias[2] = new Pizzeria(4, 6, "Додо");
+    std::map<int, Pizzeria*> pizzerias;
+    pizzerias[1] = new Pizzeria(1, 3, "Синица");
+    pizzerias[2] = new Pizzeria(2, 4, "Папа Джонс");
+    pizzerias[4] = new Pizzeria(4, 6, "Додо");
 
-    Menu* menus[3];
-    menus[0] = new Menu(54, 1, "маргаритта", 85);
-    menus[1] = new Menu(23, 2, "пеперони", 65);
-    menus[2] = new Menu(65, 4, "четыре сыра", 70);
+    std::map<int, Menu*> menus;
+    menus[54] = new Menu(54, 1, "маргаритта", 85);
+    menus[23] = new Menu(23, 2, "пеперони", 65);
+    menus[65] = new Menu(65, 4, "четыре сыра", 70);
 
-    Person* persons[3];
-    persons[0] = new Person(12, "Алексей", 30, true, "Address1");
-    persons[1] = new Person(19, "Валентин", 25, true, "Address2");
-    persons[2] = new Person(87, "Александр", 40, true, "Address3");
+    std::map<int, Person*> persons;
+    persons[12] = new Person(12, "Алексей", 30, true, "Address1");
+    persons[19] = new Person(19, "Валентин", 25, true, "Address2");
+    persons[87] = new Person(87, "Александр", 40, true, "Address3");
 
-    PersonVisit* visits[3];
-    visits[0] = new PersonVisit(99, 12, 2, true);
-    visits[1] = new PersonVisit(68, 19, 6, true);
-    visits[2] = new PersonVisit(85, 51, 1, true);
+    std::map<int, PersonVisit*> visits;
+    visits[99] = new PersonVisit(99, 12, 2, true);
+    visits[68] = new PersonVisit(68, 19, 6, true);
+    visits[85] = new PersonVisit(85, 51, 1, true);
 
-    PersonOrder* orders[3];
-    orders[0] = new PersonOrder(94, 12, 54, true);
-    orders[1] = new PersonOrder(24, 19, 23, true);
-    orders[2] = new PersonOrder(621, 51, 76, true);
+    std::map<int, PersonOrder*> orders;
+    orders[94] = new PersonOrder(94, 12, 54, true);
+    orders[24] = new PersonOrder(24, 19, 23, true);
+    orders[621] = new PersonOrder(621, 51, 76, true);
 
     std::cout << "Выберите пиццерию (0-2): ";
     std::cin >> chosenPizzeria;
 
     std::cout << "Информация о заказах для пиццерии " << pizzerias[chosenPizzeria]->name << ":" << std::endl;
-    for (int i = 0; i < 3; i++) {
-        if (visits[i]->pizza_id == chosenPizzeria + 1) {
-            int personId = visits[i]->person_id - 1;
-            int menuId = visits[i]->pizza_id - 1;
+    for (const auto& visit : visits) {
+        if (visit.second->pizza_id == chosenPizzeria) {
+            int personId = visit.second->person_id;
+            int menuId = visit.second->pizza_id;
 
             std::cout << "Заказ №" << orders[i]->id << std::endl;
             std::cout << "Покупатель: " << persons[i]->name << std::endl;
