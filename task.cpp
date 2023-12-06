@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <map>
 
 // Define structs for each table
 
@@ -78,10 +79,16 @@ int main() {
     personOrders.push_back(order1);
     personOrders.push_back(order2);
 
-    // Displaying sample data (for demonstration purposes)
-    std::cout << "Sample Pizzerias:" << std::endl;
+    // Create a map to store Pizzeria information
+    std::map<int, Pizzeria> pizzeriaMap;
     for (const auto& pizzeria : pizzerias) {
-        std::cout << "ID: " << pizzeria.id << ", Name: " << pizzeria.name << ", Rating: " << pizzeria.rating << std::endl;
+        pizzeriaMap[pizzeria.id] = pizzeria;
+    }
+
+    // Displaying sample data using map (for demonstration purposes)
+    std::cout << "Sample Pizzerias:" << std::endl;
+    for (const auto& entry : pizzeriaMap) {
+        std::cout << "ID: " << entry.second.id << ", Name: " << entry.second.name << ", Rating: " << entry.second.rating << std::endl;
     }
 
     // Similar display for other tables...
